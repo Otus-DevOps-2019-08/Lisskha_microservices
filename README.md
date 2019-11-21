@@ -336,9 +336,9 @@ $ unzip reddit-microservices.zip && mv reddit-microservices src
 - ***ui*** - веб-интерфейс, работающий с другими сервисами  
 
 Созданы файлы:
-- [post-py/Dockerfile]()
-- [comment/Dockerfile]()
-- [ui/Dockerfile]()
+- [post-py/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/post-py%2520Dockerfile)
+- [comment/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/comment%2520Dockerfile)
+- [ui/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/ui%2520Dockerfile)
 
 Скачала последнюю версию образа MongoDB:
 ```sh
@@ -368,7 +368,7 @@ $ docker run -d --network=reddit -p 9292:9292 <my_dockerhub_login>/ui:1.0
 Проверка
 http://35.195.116.154:9292/
 
-- Оптимизировала и пересобрала образ для ui:
+- Оптимизировала и пересобрала образ для [ui](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/ui%2520Dockerfile%2520new):
 ```sh
 $ vim ui/Dockerfile
 $ docker build -t <my_dockerhub_login>/ui:2.0 ./ui

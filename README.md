@@ -1,11 +1,17 @@
 # Lisskha_microservice repository by Yuliya Kharchenko
 
 ## Table of contents
-- [HW12. Docker: Введение]()
-    - [Доп. задание]()
+- [HW12. Docker: Введение](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-12-docker-введение)
+    - [Доп. задание №1]()
+    - [Доп. задание №2]()
+- [HW13. Docker: Микросервисы]()
+    - [Доп. задание №1]()
+    - [Доп. задание №2]()
 
 
 # HW 12. Docker: Введение
+
+PR: https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/pull/1/files
 
 - Установлены:
 ```sh
@@ -311,10 +317,88 @@ $ docker diff 29eed99a817e
 
 # Пересоздать конт и проверить что изменения не сохранились
 $ docker stop reddit && docker rm reddit && docker run --name reddit --rm -it 4e8932235b85 bash -c ls
-
 ```
 
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
+
+# HW 13. Docker: Микросервисы
+
+```
+$ brew install hadolint
+$ docker-machine ls
+$ eval $(docker-machine env docker-host)
+$ wget https://github.com/express42/reddit/archive/microservices.zip
+$ unzip reddit-microservices.zip && mv reddit-microservices src
+```
+Приложение состоит из:
+- ***post-py*** - сервис, отвечающий за написание постов
+- ***comment*** - сервис, отвечающий за написание комментов
+- ***ui*** - веб-интерфейс, работающий с другими сервисами  
+
+Созданы файлы:
+- [post-py/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/post-py%2520Dockerfile)
+- [comment/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/comment%2520Dockerfile)
+- [ui/Dockerfile](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/ui%2520Dockerfile)
+
+Скачала последнюю версию образа MongoDB:
+```sh
+$ docker pull mongo:latest
+```
+Собрала образы с сервисами:
+```sh
+$ docker build -t <my_dockerhub_login>/post:1.0 ./post-py
+$ docker build -t <my_dockerhub_login>/comment:1.0 ./comment
+$ docker build -t <my_dockerhub_login>/ui:1.0 ./ui
+
+$ docker images
+REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
+<my_dockerhub_login>/ui            1.0                 be26bf2af4d7        13 minutes ago      783MB
+<my_dockerhub_login>/comment       1.0                 5e14a8dbea9d        15 minutes ago      781MB
+<my_dockerhub_login>/post          1.0                 d9b9efa647df        17 minutes ago      117MB
+```
+Создала сеть для приложения и запустила конты:
+```sh
+$ docker network create reddit
+$ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest
+$ docker run -d --network=reddit --network-alias=post <my_dockerhub_login>/post:1.0
+$ docker run -d --network=reddit --network-alias=comment <my_dockerhub_login>/comment:1.0
+$ docker run -d --network=reddit -p 9292:9292 <my_dockerhub_login>/ui:1.0
+```
+
+Проверка
+http://35.195.116.154:9292/
+
+- Оптимизировала и пересобрала образ для [ui](https://gist.githubusercontent.com/Lisskha/dacfa1f77ace3b6e7936c6d1ac914399/raw/764cc60ae3761e783a9dd3607d72c0c5e165d592/ui%2520Dockerfile%2520new):
+```sh
+$ vim ui/Dockerfile
+$ docker build -t <my_dockerhub_login>/ui:2.0 ./ui
+$ docker images
+REPOSITORY                         TAG                 IMAGE ID            CREATED             SIZE
+<my_dockerhub_login>/ui            2.0                 58d313016e6b        8 seconds ago       459MB
+<my_dockerhub_login>/ui            1.0                 be26bf2af4d7        25 minutes ago      783MB
+```
+- Выключила созданные конты и запустила заново (с помощью тех же команд):
+```sh
+$ docker kill $(docker ps -q)
+```
+- Создала вольюм:
+```sh
+$ docker volume create reddit_db
+```
+- Пересоздала конты с подключением вольюма:
+```sh
+$ docker kill $(docker ps -q)
+$ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db -v reddit_db:/data/db mongo:latest
+$ docker run -d --network=reddit --network-alias=post <my_dockerhub_login>/post:1.0
+$ docker run -d --network=reddit --network-alias=comment <my_dockerhub_login>/comment:1.0
+$ docker run -d --network=reddit -p 9292:9292 <my_dockerhub_login>/ui:2.0
+```
+- Зашла на http://35.195.116.154:9292 создала новый пост
+- Перпесоздала конты, проверила что пост остался на месте http://35.195.116.154:9292/post/5dd71a612e2264000e27ba04
+
+## Доп. задание №1
+
+## Доп. задание №2
 
 
-
-
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)

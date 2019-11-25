@@ -2,12 +2,14 @@
 
 ## Table of contents
 - [HW12. Docker: Введение](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-12-docker-введение)
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5)
+    - [Доп. задание №2]()
+- [HW13. Docker: Микросервисы](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#hw-13-docker-%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B)
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2)
+- [HW14. Docker: Network, docker-compose]()
     - [Доп. задание №1]()
     - [Доп. задание №2]()
-- [HW13. Docker: Микросервисы]()
-    - [Доп. задание №1]()
-    - [Доп. задание №2]()
-
 
 # HW 12. Docker: Введение
 
@@ -95,7 +97,7 @@ REPOSITORY             TAG                 IMAGE ID            CREATED          
 jull/ubuntu-tmp-file   latest              cd948fb78b1e        9 seconds ago       123MB
 ```
 
-## Доп. задание
+## Доп. задание №1
 - Информация о контейнере
 ```sh
 $ docker inspect c6fcb5db6c5b
@@ -319,9 +321,13 @@ $ docker diff 29eed99a817e
 $ docker stop reddit && docker rm reddit && docker run --name reddit --rm -it 4e8932235b85 bash -c ls
 ```
 
+## Доп. задание №2
+
 [Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
 
 # HW 13. Docker: Микросервисы
+
+PR: https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/pull/2
 
 ```
 $ brew install hadolint
@@ -396,9 +402,254 @@ $ docker run -d --network=reddit -p 9292:9292 <my_dockerhub_login>/ui:2.0
 - Зашла на http://35.195.116.154:9292 создала новый пост
 - Перпесоздала конты, проверила что пост остался на месте http://35.195.116.154:9292/post/5dd71a612e2264000e27ba04
 
+- Стопнула и удалила все конты, остановила виртуалку
+```sh
+docker ps -qa | xargs docker stop
+docker ps -qa | xargs docker rm
+```
+
 ## Доп. задание №1
 
 ## Доп. задание №2
 
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
+
+# HW 14. Docker: Network, docker-compose 
+
+- Всё как обычно, подключилась к хосту:
+```sh
+$ docker-machine ls
+$ eval $(docker-machine env docker-host)
+# Просит пересоздать серт, тк стопала виртуалку
+$ docker-machine regenerate-certs docker-host
+$ eval $(docker-machine env docker-host)
+```
+### None network driver
+- Запустила конт с none-драйвером. Образ joffotron/docker-net-tools с предустановелнными утилитами для работы с сетью (bind-tools, net-tools и curl).  
+  Конт запустится, выполнит команду ifconfig и удалится.
+```sh 
+$ docker run -ti --rm --network none joffotron/docker-net-tools -c ifconfig
+...
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+```
+### Host network driver
+- Запустила конт в сетевом пространстве docker-host.  
+  На этот раз появились интерфейсы **br-1fbb4620178c Link encap, docker0, ens4, lo**
+```sh
+$ docker run -ti --rm --network host joffotron/docker-net-tools -c ifconfig
+```
+- Запустила то же самое с помощью docker-machine
+```sh
+$ docker-machine ssh docker-host ifconfig
+```
+- Запустила стопитсот раз (4) команду
+```sh
+$ docker run --network host -d nginx
+$ docker ps -a
+```
+  Появилось 4 конта, каждый раз при запуске команды docker run стопался предыдущий конт (три находятся в состоянии Exited). nginx не может разворачиваться в одной и той же сети (без указания каких-либо параметров, типа порта) несколько раз, поэтому предыдущие стопаются.
+- Остановила запущенный конт
+```sh
+$ docker kill $(docker ps -q)
+```
+
+### Docker networks
+- Зашла на docker-host выполнила команду и посмотрела существующие в данный момент net-namespaces:
+```sh
+$ docker-machine ssh docker-host
+$ sudo ln -s /var/run/docker/netns /var/run/netns
+$ ip netns
+```
+- Запустила конт с использованием драйвера none, появился новый неймспейс, который не дает запустить в нем команду 
+```sh
+docker run --network none -d joffotron/docker-net-tools
+
+ip netns
+RTNETLINK answers: Invalid argument
+RTNETLINK answers: Invalid argument
+5643e4512ea8
+default
+```
+- Запустила конт с драйвером host, неймспейс остался только дефолтный (тк совпадает с настройками, которые создаются при запуске с драйвером host), проверила какие интерфейсы в нем
+```sh
+docker run --network host -d nginx
+ip netns
+ip netns exec default ip a
+```
+
+### Bridge network driver
+- Создала bridge-сеть в docker 
+```sh
+$ docker network create reddit --driver bridge
+$ docker network ls
+$ docker network inspect 1fbb4620178c
+```
+- Запустила проект reddit с использованием bridge-сети
+```sh
+$ docker run -d --network=reddit mongo:latest
+$ docker run -d --network=reddit <my_login_dockerhub>/post:1.0
+$ docker run -d --network=reddit <my_login_dockerhub>/comment:1.0
+$ docker run -d --network=reddit -p 9292:9292 <my_login_dockerhub>/ui:1.0
+```
+Сервисы ссылаются друг на друга по dns-именам, прописанным в ENV-переменных (в Dockerfile).  
+В нашем случае для решения проблемы, будем присваивать контам имена или сетевые алиасы при старте.  
+```sh
+--name <name> (можно задать только 1 имя)  
+--network-alias <alias-name> (можно задать множество алиасов)
+```
+- Запуск новых контов
+```sh
+$ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest
+$ docker run -d --network=reddit --network-alias=post <my_login_dockerhub>/post:1.0
+$ docker run -d --network=reddit --network-alias=comment  <my_login_dockerhub>/comment:1.0
+$ docker run -d --network=reddit -p 9292:9292 <my_login_dockerhub>/ui:1.0
+```
+- Проверка  
+http://34.76.67.100:9292/new
+
+- Запуск проекта в двух bridge сетях. Так, чтобы сервис ui не имел доступа к БД
+  - Стопнула старые конты, создала docker-сети и запустила новые конты в разных бриджах
+  ```sh
+  $ docker kill $(docker ps -q) 
+
+  $ docker network create back_net --subnet=10.0.2.0/24
+  $ docker network create front_net --subnet=10.0.1.0/24
+  $ docker network ls
+  NETWORK ID          NAME                DRIVER              SCOPE
+  029ff6b51819        back_net            bridge              local
+  6636ac637c01        bridge              bridge              local
+  7a368b0583c2        front_net           bridge              local
+  1fbb4620178c        reddit              bridge              local
+
+  $ docker run -d --network=front_net -p 9292:9292 --name ui  <my_login_dockerhub>/ui:1.0
+  $ docker run -d --network=back_net --name comment  <my_login_dockerhub>/comment:1.0
+  $ docker run -d --network=back_net --name post  <my_login_dockerhub>/post:1.0
+  $ docker run -d --network=back_net --name mongo_db --network-alias=post_db --network-alias=comment_db mongo:latest
+  ```
+  - Docker при инициализации контейнера может подключить к нему только одну сеть. При этом контейнеры из соседних сетей не будут доступны как в DNS, так и для взаимодействия по сети. Поэтому нужно поместить контейнеры post и comment в обе сети.  
+  Дополнительные сети подключаются командой:
+  ```sh
+  docker network connect <network> <container>
+  ```
+  - Подключила конты ко второй сети
+  ```sh
+  $ docker network connect front_net post
+  $ docker network connect front_net comment
+  ```
+  - Проверка  
+  http://34.76.67.100:9292/
+
+### Команды
+```sh
+# Зашла на докер-хост и установила bridge-utils 
+$ docker-machine ssh docker-host
+docker-user@docker-host:~$ sudo apt-get update && sudo apt-get install bridge-utils
+
+# Смотреть список сетей
+$ sudo docker network ls
+
+# Найти бриджи
+$ ifconfig | grep br
+br-029ff6b51819 Link encap:Ethernet  HWaddr 02:42:fb:5a:53:e1
+br-1fbb4620178c Link encap:Ethernet  HWaddr 02:42:b3:07:d0:c2
+br-7a368b0583c2 Link encap:Ethernet  HWaddr 02:42:7d:2e:a3:84
+
+# Bridge для back_net (по аналогии и для остальных сетей)
+$ ifconfig br-029ff6b51819
+$ sudo docker inspect 029ff6b51819
+
+# Смотреть инфу о bridge интерфейсе
+$ sudo brctl show br-7a368b0583c2
+## Отображаемые veth-интерфейсы - это те части виртуальных пар интерфейсов, которые лежат в сетевом пространстве хоста и также отображаются в ifconfig. Вторые их части лежат внутри контейнеров.
+
+# Смотрим iptables
+$ sudo iptables -nL -t nat
+## Обратите внимание на цепочку POSTROUTING. Отмеченные звездочкой правила отвечают за выпуск во внешнюю сеть контейнеров из bridge-сетей
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination
+*MASQUERADE  all  --  10.0.2.0/24          0.0.0.0/0
+*MASQUERADE  all  --  172.17.0.0/16        0.0.0.0/0
+*MASQUERADE  all  --  172.18.0.0/16        0.0.0.0/0
+MASQUERADE  tcp  --  10.0.1.2             10.0.1.2             tcp dpt:9292
+
+## Обратите внимание на цепочку DOCKER и правила DNAT в ней. Они отвечают за перенаправление трафика на адреса уже конкретных контов
+target     prot opt source               destination
+DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:9292 to:10.0.1.2:9292 
+
+# Посмотреть процессы. Есть процесс docker-proxy, который слушает на порту 9292 
+$ ps ax | grep docker-prox
+20531 ?        Sl     0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9292 -container-ip 10.0.1.2 -container-port 9292
+```
+
+## Docker-compose
+### Проблемы
+- Одно приложение состоит из множества контейнеров/сервисов
+- Один контейнер зависит от другого
+- Порядок запуска имеет значение
+- docker build/run/create ... (долго и много)
+
+### Docker-compose
+- Отдельная утилита
+- Декларативное описание docker-инфраструктуры в YAML-формате
+- Управление многоконтейнерными приложениями
+
+**Установка [docker-compose](https://docs.docker.com/docker-for-mac/install/)**
+```sh
+$ docker-compose --version
+docker-compose version 1.24.1, build 4667896b
+```
+- В дире src создала файл [docker-compose.yml](https://gist.githubusercontent.com/Lisskha/f1a9b76c0aa8ca2d8c748b53a994d224/raw/537d13118694276bf181ae3c5f2adc5538be0369/src%2520docker-compose.yml)
+  - docker-compose поддерживает интерполяцию (подстановку) переменных окружения. В данном случае это переменная USERNAME. Поэтому перед запуском необходимо экспортировать значения данных переменных окружения.
+- Остановила конты и выполнила их запуск с помощью компоса
+```sh
+$ docker kill $(docker ps -q)
+
+$ export USERNAME=<my_login_dockerhub>
+$ docker-compose up -d
+$ docker-compose ps
+$ docker ps
+```
+- Проверка  
+http://34.76.67.100:9292/
+
+## Задание 1
+- Перед каждым пересозданием контов удаляю предыдущие
+```sh
+$ docker-compose down
+```
+- Для запуска контов
+```sh
+$ docker-compose up -d
+```
+
+- Добавила в [docker-compose.yml](https://gist.githubusercontent.com/Lisskha/f1a9b76c0aa8ca2d8c748b53a994d224/raw/8314f5a18901e1523608b28a9c2a7e6d21b91fda/src%2520docker-compose.yml%2520new) несколько сетей и параметризировала некоторые параметры. Параметризированные параметры добавила в src/.env (файл внесен в .gitignore), продублировала их в файл src/.env.example
+- Результат
+```sh
+$ docker-compose ps
+     Name                  Command             State           Ports
+-----------------------------------------------------------------------------
+src_comment_1   puma                          Up
+src_post_1      python3 post_app.py           Up
+src_post_db_1   docker-entrypoint.sh mongod   Up      27017/tcp
+src_ui_1        puma                          Up      0.0.0.0:9292->9292/tcp
+```
+- Проверка  
+http://34.76.67.100:9292/
+
+## Задание 2
+При запуске проекта с помощью docker-compose, все сущности создаются с префиксом = каталогу, где лежит docker-compose.yml. Это считается базовым именем проекта. Поменять его можно, закинув в .env параметр: **COMPOSE_PROJECT_NAME=<new_name>**
+
+
+## Доп. задание №1
+
+## Доп. задание №2
 
 [Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
+
+

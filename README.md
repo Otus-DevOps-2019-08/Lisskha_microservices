@@ -2,12 +2,15 @@
 
 ## Table of contents
 - [HW12. Docker: Введение](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-12-docker-введение)
-    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5)
-    - [Доп. задание №2]()
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2)
 - [HW13. Docker: Микросервисы](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#hw-13-docker-%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B)
-    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1)
-    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2)
-- [HW14. Docker: Network, docker-compose]()
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-1)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-1)
+- [HW14. Docker: Network, docker-compose](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-14-docker-network-docker-compose)
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-2)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-2)
+- [HW15. Gitlab CI: Построение процесса непрерывной поставки]()
     - [Доп. задание №1]()
     - [Доп. задание №2]()
 
@@ -416,6 +419,8 @@ docker ps -qa | xargs docker rm
 
 # HW 14. Docker: Network, docker-compose 
 
+PR: https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/pull/5
+
 - Всё как обычно, подключилась к хосту:
 ```sh
 $ docker-machine ls
@@ -653,3 +658,233 @@ http://34.76.67.100:9292/
 [Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
 
 
+# HW 15. Gitlab CI: Построение процесса непрерывной поставки
+
+- Необходимые параметры для машины, на которой будем разворачивать Gitlab CI
+  ```sh
+  1               CPU
+  3.75GB          RAM 
+  50-100GB        HDD 
+  Ubuntu 16.04    IMAGE
+  ```
+  - В [официальной документации](https://docs.gitlab.com/ce/install/requirements.html) описаны рекомендуемые характеристики сервера 
+
+- Создала новую ВМ с предустановленным докером
+  ```sh
+  $ docker-machine create --driver google \
+  --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts \
+  --google-zone europe-west1-b \
+  --google-machine-type n1-standard-1 \
+  --google-disk-size 100 \
+  gitlab-ci
+
+  ...
+  Docker is up and running!
+  To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: 
+  docker-machine env gitlab-ci
+  ```
+- Включила разрешение подключения по HTTP/HTTPS
+
+Для запуска Gitlab CI мы будем использовать **omnibus-установку**  
+Основной плюс для нас в том, что мы можем быстро запустить сервис и сконцентрироваться на процессе непрерывной поставки.  
+Минусом такого типа установки является то, что такую инсталляцию тяжелее эксплуатировать и дорабатывать, но долговременная эксплуатация этого сервиса не входит в наши цели.
+Более подробно об этом в документации  
+https://docs.gitlab.com/omnibus/README.html  
+https://docs.gitlab.com/omnibus/docker/README.html  
+
+Установила докер сразу при создании ВМ, но можно было на пустую машину руками поставить:
+```sh
+# из-под root на новом сервере выполнить
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# add-apt-repository "deb https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+# apt-get update
+# apt-get install docker-ce docker-compose
+```
+
+### Подготовка окружения
+- Зашла на ВМ, создала каталоги и подготовила [docker-compose.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/b782c399a746bc7017b97f86a0a21971bf66313e/srv%2520gitlab%2520docker-compose.yml)
+  ```sh
+  $ eval $(docker-machine env gitlab-ci)
+  $ docker-machine ssh gitlab-ci
+  
+  sudo su
+  mkdir -p /srv/gitlab/config /srv/gitlab/data /srv/gitlab/logs
+  cd /srv/gitlab/
+  vim docker-compose.yml
+  ```
+- Запустила сборку образа и запуск Gitlab CI (надо запускать в каталоге, где лежит docker-compose.yml)
+  ```sh
+  /srv/gitlab# docker-compose up -d
+  ```
+- Откуда взяли содержимое файла docker-compose.yml - https://docs.gitlab.com/omnibus/docker/README.html#install-gitlab-using-docker-compose  
+- Проверка  
+  http://34.76.67.100/users/password/edit?reset_password_token=psJktjUExEuCYk45-cyd
+  Сменила пароль для рута, залогинилась.
+
+## Работа с Gitlab CI
+### Настройка
+- Выкл регу новых юезров
+  - В Settings/General/Sign-up restrictions сняла галку с Sign-up enabled 
+### Создание проекта
+***Из лекции:***
+- Каждый проект в Gitlab CI принадлежит к группе проектов
+- В проекте может быть определен CI/CD пайплайн
+- Задачи (jobs), входящие в пайплайн, должны исполняться на runners 
+ 
+***Создание группы***
+- В Groups/Your Groups создать новую группу
+- Заполнить описание 
+ 
+***Создание проекта***
+- Находясь в группе HW15, тыкнуть кнопку New project
+- Имя проекта - example
+
+***Добавление remote***
+- В своей репе Lisskha_microservices в ветке gitlab-ci-1 запустить 
+```sh
+$ git remote add gitlab http://34.76.67.100/hw15/example.git
+$ git push gitlab gitlab-ci-1
+# Ввести креды, которые задавали в морде гитлаба
+```
+
+### CI/CD Pipeline
+- Добавила файл [.gitlab-ci.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/a7fea23e38c25ecb2e0dfe8597d4ee7aa7534508/.gitlab-ci.yml) в корень своей репы
+- Запушила в ветку
+```sh
+$ git add .
+$ git commit -m 'Add pipeline definition'
+$ git push gitlab gitlab-ci-1
+```
+- Если добавлять новый файл через морду, то не забыть потом спулить изменения 
+```sh
+git pull gitlab gitlab-ci-1
+```
+- Перейти в морде в CI / CD - Pipelines, там видно наш пайплайн. Но он пендится, тк нет раннера
+- Запуск **Runner** и рега его в интерактивном режиме
+  - Сначала надо получить токен. Идем в Settings/CI / CD/Runners settings - Expand
+  - Копируем токен в разделе "Set up a specific Runner manually" 
+  - На виртуалке с гитлабом запустить:
+  ```sh
+  docker run -d --name gitlab-runner --restart always \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest
+  ```
+  - Runner запустился, регаемся
+  ```sh
+  docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
+
+  Please enter the gitlab-ci coordinator URL (e.g. https://gitlab.com/):
+  http://34.76.67.100/
+  Please enter the gitlab-ci token for this runner:
+  <token>
+  Please enter the gitlab-ci description for this runner:
+  [d8ee675a18ed]: runner-hw15
+  Please enter the gitlab-ci tags for this runner (comma separated):
+  linux,xenial,ubuntu,docker
+  Registering runner... succeeded                     runner=tAaHjhDz
+  Please enter the executor: parallels, shell, virtualbox, docker+machine, custom, docker, docker-ssh+machine, kubernetes, docker-ssh, ssh:
+  docker
+  Please enter the default Docker image (e.g. ruby:2.6):
+  alpine:latest
+
+  Runner registered successfully.
+  ```
+  - В настройках (в морде) появится новый раннер
+  ```sh
+  Runners activated for this project
+  E3v_fsp6 
+  runner-hw15
+  docker linux ubuntu xenial
+  ```
+  - После добавления раннера, пайплайн запустился (в CI / CD/Pipelines)
+
+### Тестирование reddit
+- В свою репу качаем приложение, пушим в ветку в Gitlab
+```sh
+$ git clone https://github.com/express42/reddit.git && rm -rf ./reddit/.git
+$ git add reddit/
+$ git commit -m "Add reddit app"
+$ git push gitlab gitlab-ci-1
+```
+- Изменила описание пайплайна в [.gitlab-ci.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/881dc945b0ffca094782031fc829848dc17935fe/.gitlab-ci.yml%2520new)
+- В каталоге reddit создала файл [simpletest.rb](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/e66e10a873f2bc064a9f3d4d670deb38970dea15/reddit%2520simpletest.rb) для вызова тестов
+- В reddit/Gemfile добавила библиотеку для тестирования
+```sh
+source 'https://rubygems.org'
+...
+gem 'rack-test'
+...
+end
+```
+- Теперь на каждое изменение в коде приложения будет запущен тест (смотреть в CI / CD - Jobs)
+
+### Окружения
+***DEV-окружение***
+
+Вернемся к академическому пайплайну, который описывает шаги сборки, тестирования и деплоймента.  
+В прошлом занятии мы создали job с названием deploy_job, но не разбирались что и куда будет задеплоено.  
+
+Изменим пайплайн таким образом, чтобы job deploy стал определением окружения dev, на которое условно будет выкатываться каждое изменение в коде проекта.
+
+Переименуем deploy stage в review.  
+deploy_job заменим на deploy_dev_job  
+Добавим environment  
+Новый [.gitlab-ci.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/bdd355ab1c410c6abddb9d6584fee8dd40621aa1/.gitlab-ci.yml%2520new%25202) запушила в гитлаб
+```sh
+$ git add .gitlab-ci.yml
+$ git commit -m "Update .gitlab-ci.yml for DEV"
+$ git push gitlab gitlab-ci-1
+```
+
+После успешного завешения пайплайна с определением окружения перейти в Operations > Environments, там появилось определение первого окружения (dev)  
+
+***PROD-окружение и STAGE-окружение***  
+
+Если на dev мы можем выкатывать последнюю версию кода, то к production окружению это может быть неприменимо, если, конечно, вы не стремитесь к continuous deployment.  
+Определим два новых этапа: stage и production, первый будет содержать job имитирующий выкатку на staging окружение, второй на production окружение.
+Определим эти job таким образом, чтобы они запускались с кнопки  
+Новый файл [.gitlab-ci.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/d89b7b2c68dd3ee9cb7ef143d0ae6da4c77316a3/.gitlab-ci.yml%2520new%25203%2520STAGE%2520and%2520PROD) запушила в гитлаб
+```sh
+$ git add .gitlab-ci.yml
+$ git commit -m "Update .gitlab-ci.yml for STAGE & PROD"
+$ git push gitlab gitlab-ci-1
+```
+when: manual – говорит о том, что job должен быть запущен человеком из UI.  
+
+Теперь в пайплайне стейдж и прод не запустились автоматом, их нужно запускать вручную.  
+На странице окружений в Operations > Environments появились оружения staging и production  
+
+Обычно, на production окружение выводится приложение с явно зафиксированной версией (например, 2.4.10).  
+Добавим в описание pipeline директиву, которая не позволит нам выкатить на staging и production код, не помеченный с помощью тэга в git.  
+```sh
+# В staging и production перед script нужно добавить 
+only:
+- /^\d+\.\d+\.\d+/
+```
+Директива only описывает список условий, которые должны быть истинны, чтобы job мог запуститься.  
+Регулярное выражение слева означает, что должен стоять semver тэг в git, например, 2.4.10  
+
+Изменение без указания тэга запустят пайплайн без job staging и production  
+Изменение, помеченное тэгом в git запустит полный пайплайн
+```sh
+$ git add .gitlab-ci.yml
+$ git commit -m "Update .gitlab-ci.yml Add tag"
+$ git tag 2.4.10
+$ git push gitlab gitlab-ci-1 --tags
+```
+
+***Динамические окружения***  
+Gitlab CI позволяет определить динамические окружения, это мощная функциональность позволяет вам иметь выделенный стенд для, например, каждой feature-ветки в git.  
+Определяются динамические окружения с помощью переменных, доступных в .gitlab-ci.yml  
+Новый файл [.gitlab-ci.yml](https://gist.githubusercontent.com/Lisskha/a26e4c3f6ff7d94656fd1eb6a624131b/raw/6294510fa2da3ec53d90acce677703a40a83393a/.gitlab-ci.yml%2520new%25204%2520Dynamic%2520environment), где only и except в этом job, определяют динамическое окружение для каждой ветки в репозитории, кроме ветки master  
+
+Теперь, на каждую ветку в git отличную от master Gitlab CI будет определять новое окружение.
+Если создать ветки new-feature и bugfix, то на странице окружений они будут в review
+
+
+## Доп. задание №1
+
+## Доп. задание №2
+
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)

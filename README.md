@@ -16,9 +16,12 @@
 - [HW16. Введение в мониторинг](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-16-%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-4)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-4)
-- [HW17. Мониторинг приложения и инфраструктуры]()
+- [HW17. Мониторинг приложения и инфраструктуры](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-17-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%B8%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-5)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-5)
+- [HW18. Логирование и распределенная трассировка]()
+    - [Доп. задание №1]()
+    - [Доп. задание №2]()
 
 
 # HW 12. Docker: Введение
@@ -1104,6 +1107,8 @@ http://35.195.16.1:9090/graph
 
 # HW 17. Мониторинг приложения и инфраструктуры
 
+PR: https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/pull/14/files
+
 ## Подготовка окружения
 
 `!!! Открывать порты в файрволле для новых сервисов нужно самостоятельно по мере их добавления !!!`
@@ -1428,6 +1433,351 @@ ADD config.yml /etc/alertmanager/
 ## Доп. задание №1
 
 ## Доп. задание №2
+
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
+
+
+# HW 18. Логирование и распределенная трассировка
+
+PR:  
+
+## Подготовка окружения
+- Код микросервисов обновился для добавления функционала логирования. Клонировала новую версию кода по [ссылке](https://github.com/express42/reddit/tree/logging) и обновила код в дире /src
+- Если вы используется python-alpine, добавьте в /src/post-py/Dockerfile установку пакетов gcc и musl-dev
+  ```
+  ...
+
+  RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
+    && pip install --no-cache-dir -r $APP_HOME/requirements.txt \
+    && apk del .build-deps
+
+  ...
+  ```
+### !!! Открывать порты в файрволле для новых сервисов нужно самостоятельно по мере их добавления !!!
+- Создала Docker хост в GCE и настроила локальное окружение на работу с ним
+  ```
+  $ export GOOGLE_PROJECT=docker-xxxxxx
+
+  $ docker-machine create --driver google --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts --google-machine-type n1-standard-1 --google-open-port 5601/tcp --google-open-port 9292/tcp --google-open-port 9411/tcp logging
+  
+  $ eval $(docker-machine env logging)
+
+  $ docker-machine ip logging
+  108.59.80.183
+
+  $ gcloud compute firewall-rules list
+  docker-machines         default  INGRESS    1000      tcp:2376,tcp:5601,tcp:9292,tcp:9411        False
+  ```
+- Выполнила сборку образов из корня репы
+  ```
+  $ export USER_NAME=yulka
+
+  $ for i in ui post-py comment; do cd src/$i; bash docker_build.sh; cd -; done
+  ```
+### !!! Внимание! В данном ДЗ мы используем отдельные теги для контейнеров приложений :logging !!!
+
+## Логирование Docker контейнеров
+### Elastic Stack
+
+Как упоминалось на лекции хранить все логи стоит **централизованно**: на одном/нескольких серверах. В этом ДЗ мы рассмотрим `Elastic стек (ELK)`:
+  - **ElasticSearch** - TSDB и поисковый движок для хранения данных
+  - **Logstash** - для агрегации и трансформации данных
+  - **Kibana** - для визуализации  
+
+Однако, для агрегации логов вместо Logstash мы будем использовать **Fluentd**, таким образом стек называется `EFK`  
+
+- Для системы логирования создала отдельный compose-файл [docker/docker-compose-logging.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/ce683ef5c5b40ee8341b987358091ad77a5cc7ec/docker%2520docker-compose-logging.yml)
+- Открыла порты в GCE
+  ```
+  $ gcloud compute firewall-rules create fluentd-default --allow tcp:24224,udp:24224
+  $ gcloud compute firewall-rules create elasticsearch-default --allow tcp:9200,9300
+  $ gcloud compute firewall-rules create kibana-default --allow tcp:5601
+  ```
+
+### Fluentd
+**`Fluentd`** инструмент, который может использоваться для отправки, агрегации и преобразования лог-сообщений. Мы будем использовать его для агрегации (сбора в одной месте) и парсинга логов сервисов приложения.
+- Создала диру logging/fluentd (`$ mkdir -p logging/fluentd`)
+- Создала файл logging/fluentd/Dockerfile:
+```sh
+FROM fluent/fluentd:v0.12
+RUN gem install fluent-plugin-elasticsearch --no-rdoc --no-ri --version 1.9.5
+RUN gem install fluent-plugin-grok-parser --no-rdoc --no-ri --version 1.0.0
+ADD fluent.conf /fluentd/etc
+```
+- Создала кофигурационный файл для fluentd - [logging/fluentd/fluent.conf](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/f89c99b7cef49915d718b8dcecf3adb4b5866ef8/logging%2520fluentd%2520fluent.conf)
+- Соберала docker образ для fluentd (находясь в директории logging/fluentd)
+  ```
+  $ export USER_NAME=<my_dockerhub_login>
+  $ docker build -t $USER_NAME/fluentd .
+  ```
+
+## Структурированные логи
+Логи должны иметь заданную (единую) структуру и содержать необходимую для нормальной эксплуатации данного сервиса информацию о его работе  
+Лог-сообщения также должны иметь понятный для выбранной системы логирования формат, чтобы избежать ненужной траты ресурсов на преобразование данных в нужный вид.  
+Структурированные логи мы рассмотрим на примере сервиса post
+
+- В файле docker/.env поменяла теги приложения на `logging`
+- Запустила сервисы приложения (находясь в каталоге docker/)
+  ```
+  $ docker-compose up -d
+  ```
+- Выполнила команду для просмотра логов post сервиса:
+  ```
+  $ docker-compose logs -f post
+  Attaching to docker_post_1
+  ```
+**⚠ Внимание!** Среди логов можно наблюдать проблемы с доступностью Zipkin, у нас он пока что и правда не установлен. Ошибки можно игнорировать ([Github issue](https://github.com/express42/reddit/issues/2))  
+
+- Открыла приложение в браузере  
+  http://108.59.80.183:9292/
+- Создала несколько постов и пронаблюдала запись логов post:  
+`post_1     | {"event": "post_create", "level": "info", "message": "Successfully created a new post", "params": {"link": "http://34.77.129.109:9292", "title": "ololol"}, "request_id": "ccf43cc0-3bbf-4436-a0ca-7bbac8e647c0", "service": "post", "timestamp": "2019-12-18 23:46:05"}`  
+`post_1     | {"addr": "172.19.0.2", "event": "request", "level": "info", "method": "POST", "path": "/add_post?", "request_id": "ccf43cc0-3bbf-4436-a0ca-7bbac8e647c0", "response_status": 200, "service": "post", "timestamp": "2019-12-18 23:46:05"}`  
+`post_1     | {"event": "find_all_posts", "level": "info", "message": "Successfully retrieved all posts from the database", "params": {}, "request_id": "a263bfcb-132b-4a10-9522-2922a8aa22a9", "service": "post", "timestamp": "2019-12-18 23:46:05"}`  
+`post_1     | {"addr": "172.19.0.2", "event": "request", "level": "info", "method": "GET", "path": "/posts?", "request_id": "a263bfcb-132b-4a10-9522-2922a8aa22a9", "response_status": 200, "service": "post", "timestamp": "2019-12-18 23:46:05"}`
+    - Каждое событие, связанное с работой приложения логируется в JSON формате и имеет структуру: 
+      - **event** - тип события 
+      - **message** - сообщение 
+      - **params** - переданные функции параметры 
+      - **service** - имя сервиса
+
+Выключала виртуалку, ip адрес сменился, теперь так:
+```
+$ docker-machine regenerate-certs logging
+$ eval $(docker-machine env logging)
+$ docker-machine ip logging
+35.223.72.229
+```
+
+### Отправка логов во Fluentd
+По дефолту Docker контейнерами используется json-file драйвер для логирования информации, которая пишется сервисом внутри контейнера в **stdout** (и **stderr**). Для отправки логов во Fluentd используем [docker драйвер fluentd](https://docs.docker.com/config/containers/logging/fluentd/)  
+- Определим драйвер для логирования для сервиса post в композ файле [docker/docker-compose.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/17d92b7ef415e5198e1393983be7d5bc0dcc7dfb/docker%2520docker-compose.yml)
+  ```
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
+  ```  
+- Поднимем инфраструктуру централизованной системы логирования и перезапустим сервисы приложения.  
+  Из каталога docker:
+  ```
+  $ docker-compose -f docker-compose-logging.yml up -d
+  $ docker-compose down
+  $ docker-compose up -d
+  ```
+
+###  Что-то пошло не так
+1. Не стартует кибана, тк не может достучаться до elasticsearch (судя по логам конта `docker logs -f eab17c1800b0`)
+
+**Fix 1**  
+- Зашла на хост-машину и обновила лимит памяти
+  ```
+  $ docker-machine ssh logging
+  $ sudo su
+  # sysctl -w vm.max_map_count=262144
+  ```
+- Пересоздала конты
+  ```
+  $ docker-compose -f docker-compose-logging.yml down && docker-compose -f docker-compose-logging.yml up -d
+  ```
+
+2. Эластик стартует и сразу падает с ошибкой
+   ```
+   ERROR: [1] bootstrap checks failed
+   [1]: the default discovery settings are unsuitable for production use; at least one of [discovery.seed_hosts, discovery.seed_providers, cluster.initial_master_nodes] must be configured
+   ```
+
+**Fix 2**  
+- Чот психанула и обновила версии кибаны, элестика, fluentd и его плагинов  
+  Гисты на новые файлы:
+    - [logging/fluentd/Dockerfile](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/17df5ffa70671d3d70bef15a5f0d9828c12b5626/logging%2520fluentd%2520Dockerfile)
+    - [docker/docker-compose-logging.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/a6f5d63aeecea58cdfb17d25f0eff1a1787d0f31/docker%2520docker-compose-logging.yml%2520new1)
+- Пересоздала образ fluentd и перезапустила конты
+  ```
+  fluentd]$ export USER_NAME=<my_dockerhub_login>
+  fluentd]$ docker build -t $USER_NAME/fluentd .
+  docker]$ docker-compose -f docker-compose-logging.yml down
+  docker]$ docker-compose -f docker-compose-logging.yml up -d
+  ```
+- Хелп про сингл-ноду брала [отсюда](https://medium.com/@TimvanBaarsen/how-to-run-an-elasticsearch-7-x-single-node-cluster-for-local-development-using-docker-compose-2b7ab73d8b82)
+
+### Kibana
+**`Kibana`** - инструмент для визуализации и анализа логов от компании Elastic
+
+- Потыкала новые посты в приложении  
+  http://35.223.72.229:9292/  
+- Открыла кибану  
+  http://35.223.72.229:5601/  
+- Настройки
+    - Management/Index patterns/Create index pattern
+      - Index pattern: fluentd-*
+      - Time Filter field name: @timestamp
+    - Тыкнуть Discover --> появится график и логи
+- В левом столбце находятся названия полей. По полям можно производить поиск для быстрого нахождения нужной информации
+- Сделала фильтр по `container_name: /docker_post_1`, за последние 5 минут:  
+  http://35.223.72.229:5601/goto/82565ab9d966f714c6e859281e2494df
+- Поле `log` содержит в себе **JSON объект**, который содержит много информации. Хотелось бы выделить эту информацию в поля, чтобы иметь возможность производить по ним поиск (например поля event, service и тд). Можно воспользоваться **фильтрами** для выделения нужной инфы
+- Добавила фильтр для парсинга json логов в [logging/fluentd/fluent.conf](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/dad7da8d27d99be403f441039196e451d2dd6e1e/logging%2520fluentd%2520fluent.conf%2520new1)
+  ```
+  <filter service.post>
+    @type parser
+    format json
+    key_name log
+  </filter>
+  ```
+- Пересобрала образ и перезапустила флюент
+  ```
+  fluentd]$ docker build -t $USER_NAME/fluentd .
+  docker]$ docker-compose -f docker-compose-logging.yml up -d fluentd
+  ```
+- Проверка:
+  - Создала пару постов  
+    http://35.223.72.229:9292/
+  - Обновила кибану  
+    http://35.223.72.229:5601/app/kibana#/doc/33a3b510-2403-11ea-a057-d71a3b096dd6/fluentd-20191221?id=PSsYKW8BPSH6ymNslLpB&_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-5m,to:now))
+    - теперь вместо одного поля `log` появилось несколько полей `addr, event, method` и тд, по которым можно грепать. Пример `event: post_create`
+
+## Неструктурированные логи
+
+Неструктурированные логи отличаются отсутствием четкой структуры данных. Также часто бывает, что формат лог-сообщений не подстроен под систему централизованного логирования, что существенно увеличивает затраты вычислительных и временных ресурсов на обработку данных и выделение нужной информации.  
+На примере сервиса **ui** рассмотрим пример логов с неудобным форматом сообщений.  
+
+- По аналогии с post сервисом определим для ui сервиса драйвер для логирования `fluentd` в compose-файле [docker/docker-compose.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/61a0dadda6281c8489abb0662d026c0f2ebb4976/docker%2520docker-compose.yml%2520new2)
+  ```
+  logging:
+     driver: "fluentd"
+     options:
+       fluentd-address: localhost:24224
+       tag: service.ui
+  ```
+- Перезапустила конт
+  ```
+  $ docker-compose stop ui && docker-compose rm ui
+  $ docker-compose up -d
+  ```
+- В кибане появились логи от конта ui
+
+Когда приложение или сервис не пишет структурированные логи, приходится использовать регулярные выражения для их парсинга в [logging/fluentd/fluent.conf](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/0e89015649522af1f4b2aa66b7d0a54f6104865e/logging%2520fluentd%2520fluent.conf%2520new2)
+- Эта регулярка нужна, чтобы успешно выделить интересующую нас информацию из лога UI-сервиса в поля
+  ```
+  <filter service.ui>
+    @type parser
+    format /\[(?<time>[^\]]*)\]  (?<level>\S+) (?<user>\S+)[\W]*service=(?<service>\S+)[\W]*event=(?<event>\S+)[\W]*(?:path=(?<path>\S+)[\W]*)?request_id=(?<request_id>\S+)[\W]*(?:remote_addr=(?<remote_addr>\S+)[\W]*)?(?:method= (?<method>\S+)[\W]*)?(?:response_status=(?<response_status>\S+)[\W]*)?(?:message='(?<message>[^\']*)[\W]*)?/
+    key_name log
+  </filter>
+  ```
+- Пересоздала образ и перезапустила кибану
+  ```
+  fluentd]$ docker build -t $USER_NAME/fluentd .
+  docker]$ docker-compose -f docker-compose-logging.yml down && docker-compose -f docker-compose-logging.yml up -d
+  ```
+
+### Парсинг
+Созданные регулярки могут иметь ошибки, их сложно менять и невозможно читать. Для облегчения задачи парсинга вместо стандартных регулярок можно использовать **grok-шаблоны**.  
+`grok’и` - это именованные шаблоны регулярных выражений (очень похоже на функции). Можно использовать готовый regexp, просто сославшись на него как на функцию в файле logging/fluentd/fluent.conf  
+- Часть логов нужно еще распарсить. Для этого используем несколько Grok-ов по-очереди в [logging/fluentd/fluent.conf](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/0ca106196b300e7f32cbabcbd0f74ccd7788a552/logging%2520fluentd%2520fluent.conf%2520new3)
+- Пересобрала образ и перезапустила кибану
+
+### Ошибка..
+```
+docker]$ docker-compose -f docker-compose-logging.yml logs -f fluentd
+
+fluentd_1        | 2019-12-21 16:47:47 +0000 [info]: parsing config file is succeeded path="/fluentd/etc/fluent.conf"
+fluentd_1        | 2019-12-21 16:47:47 +0000 [error]: config error file="/fluentd/etc/fluent.conf" error_class=Fluent::ConfigError error="no grok patterns. Check configuration, e.g. typo, configuration syntax, etc"
+docker_fluentd_1 exited with code 1
+```
+- Нагуглила https://github.com/repeatedly/fluent-plugin-multi-format-parser/issues/6  
+  `So if you want a working version, you have to stay on 0.12.x and force load an older version of the plugin.`
+- Оооооок, вернула версию v0.12, итоговый файл [logging/fluentd/Dockerfile](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/e730b3f36de299c33e46342d53a595892be03d48/logging%2520fluentd%2520Dockerfile%2520new1)
+  ```
+  FROM fluent/fluentd:v0.12
+  RUN fluent-gem install fluent-plugin-elasticsearch --no-rdoc --no-ri --version 1.18.1
+  RUN fluent-gem install fluent-plugin-grok-parser --no-rdoc --no-ri --version 1.0.0
+  ADD fluent.conf /fluentd/etc
+  ```
+- Пересобрала образ, перезапустила конты.
+- Всё завелось
+
+## Доп. задание №1
+
+UI-сервис шлет логи в нескольких форматах.  
+Составьте конфигурацию fluentd так, чтобы разбирались оба формата логов UI-сервиса одновременно
+
+- Гугл в помощь - https://github.com/fluent/fluent-plugin-grok-parser
+- Отредактировала `filter service.ui` в [logging/fluentd/fluent.conf](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/844254ae415db5fb845108a2207e4e52a5aef9ed/logging%2520fluentd%2520fluent.conf%2520new4)
+  ```
+    <grok>
+      pattern service=%{WORD:service} \| event=%{WORD:event} \| request_id=%{GREEDYDATA:request_id} \| message='%{GREEDYDATA:message}'
+    </grok>
+    <grok>
+      pattern service=%{WORD:service} \| event=%{WORD:event} \| path=%{URIPATH:path} \| request_id=%{GREEDYDATA:request_id} \| remote_addr=%{IP:remote_addr} \| method= %{WORD:message} \| response_status=%{INT:response_status}
+    </grok>
+  ```
+- Пересобрала образ, перезапустила конты.
+
+## Распределенный трейсинг
+
+#### Разобраться с темой распределенного трейсинга и решить проблему в конце данного файла
+
+### Zipkin
+- Добавила в compose-файл [docker/docker-compose-logging.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/2763d9388ee3b897fda1ba811f37b8d3b751162d/docker%2520docker-compose-logging.yml%2520new2) сервис распределенного трейсинга **Zipkin**
+  ```
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+  ```
+- Прокинула порт
+  ```
+  $ gcloud compute firewall-rules create zipkin-default --allow tcp:9411
+  ```
+- В .env добавила
+  ```
+  ZIPKIN_ENABLED=true
+  ```
+- В [docker/docker-compose.yml](https://gist.githubusercontent.com/Lisskha/bb07bb4ad53cb1e684e258f025ced7fa/raw/b730246c2e6b5fb3aa3f115d0760f8a3ca686945/docker%2520docker-compose.yml%2520new3) для каждого сервиса добавтла `ENV`:
+  ```
+    environment:
+      ZIPKIN_ENABLED: ${ZIPKIN_ENABLED}
+  ```
+- В файл docker-compose-logging.yml добавила определение сети для зипкина
+  ```
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - front_net
+      - back_net
+  ...
+  networks:
+    front_net:
+    back_net:
+  ```
+- Перезапустила сервисы
+  ```
+  docker]$ docker-compose -f docker-compose-logging.yml -f docker-compose.yml down
+  docker]$ docker-compose -f docker-compose-logging.yml -f docker-compose.yml up -d
+  ```
+- Открыла **Zipkin WEB UI**  
+  http://35.223.72.229:9411/zipkin/
+- Несколько раз обновила страницу с приложением  
+  http://35.223.72.229:9292/
+- Вернулась в зипкин, там появились трейсы
+- Нажмем на один из трейсов, чтобы посмотреть, как запрос шел через систему микросервисов и каково время обработки запросов
+  - Запрос попал к сервису ui_app, который обработал его за суммарное время 44.178ms
+  - Из этих 44.178ms ушло 17.273ms на то, чтобы ui мог направить запрос post сервису по пути /posts и получить от него ответ в виде списка постов
+- ***Терминология***
+  - **`span`** - (синие полоски со временем) одна операция, которая произошла при обработке запроса
+  - **`трейс`** - набор span-ов
+  - **`Суммарное время обработки`** - равно верхнему span-у, который включает в себя время всех span-ов, расположенных под ним
+
+## Доп. задание №2
+
+Пользователи жалуются, что при нажатии на пост они вынуждены долго ждать, пока у них загрузится страница с постом. Жалоб на загрузку других страниц не поступало. Нужно выяснить, в чем проблема, используя Zipkin.  
+[Ссылка](https://github.com/Artemmkin/bugged-code) на репозиторий со сломанным кодом приложения.
+
 
 [Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
 

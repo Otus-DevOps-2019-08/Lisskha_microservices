@@ -1,30 +1,33 @@
 # Lisskha_microservice repository by Yuliya Kharchenko
 
 ## Table of contents
-- [HW12. Docker: Введение](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-12-docker-введение)
+- [HW12. **Docker**: Введение](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-12-docker-введение)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2)
-- [HW13. Docker: Микросервисы](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#hw-13-docker-%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B)
+- [HW13. **Docker**: Микросервисы](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/blob/master/README.md#hw-13-docker-%D0%BC%D0%B8%D0%BA%D1%80%D0%BE%D1%81%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D1%8B)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-1)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-1)
-- [HW14. Docker: Network, docker-compose](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-14-docker-network-docker-compose)
+- [HW14. **Docker**: Network, docker-compose](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-14-docker-network-docker-compose)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-2)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-2)
-- [HW15. Gitlab CI: Построение процесса непрерывной поставки](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-15-gitlab-ci-%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%B0-%D0%BD%D0%B5%D0%BF%D1%80%D0%B5%D1%80%D1%8B%D0%B2%D0%BD%D0%BE%D0%B8%CC%86-%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8)
+- [HW15. **Gitlab CI**: Построение процесса непрерывной поставки](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-15-gitlab-ci-%D0%BF%D0%BE%D1%81%D1%82%D1%80%D0%BE%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81%D0%B0-%D0%BD%D0%B5%D0%BF%D1%80%D0%B5%D1%80%D1%8B%D0%B2%D0%BD%D0%BE%D0%B8%CC%86-%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%B2%D0%BA%D0%B8)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-3)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-3)
-- [HW16. Введение в мониторинг](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-16-%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3)
+- [HW16. Введение в **мониторинг**](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-16-%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-4)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-4)
-- [HW17. Мониторинг приложения и инфраструктуры](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-17-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%B8%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B)
+- [HW17. **Мониторинг** приложения и инфраструктуры](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-17-%D0%BC%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D0%B8%D0%BD%D0%B3-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D0%B8%D0%BD%D1%84%D1%80%D0%B0%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%82%D1%83%D1%80%D1%8B)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-5)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-5)
-- [HW18. Логирование и распределенная трассировка](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-18-%D0%BB%D0%BE%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B8-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F-%D1%82%D1%80%D0%B0%D1%81%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0)
+- [HW18. **Логирование** и распределенная трассировка](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-18-%D0%BB%D0%BE%D0%B3%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B8-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F-%D1%82%D1%80%D0%B0%D1%81%D1%81%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0)
     - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-6)
     - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-6)
-- [HW19. Введение в Kubernetes]()
-    - [Доп. задание №1]()
-    - [Доп. задание №2]()
+- [HW19. **Kubernetes**: Введение в Kubernetes](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#hw-19-%D0%B2%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-kubernetes)
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-7)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-7)
+- [HW20. **Kubernetes**: Запуск кластера и приложения. Модель безопасности]()
+    - [Доп. задание №1](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-1-8)
+    - [Доп. задание №2](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#%D0%B4%D0%BE%D0%BF-%D0%B7%D0%B0%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-8)
 
 
 # HW 12. Docker: Введение
@@ -1787,7 +1790,7 @@ UI-сервис шлет логи в нескольких форматах.
 
 # HW 19. Введение в Kubernetes
 
-PR:  
+PR: https://github.com/Otus-DevOps-2019-08/Lisskha_microservices/pull/19 
 
 ## Цели
 - Разобрать на практике все компоненты Kubernetes, развернуть их вручную используя **The Hard Way**
@@ -3675,3 +3678,729 @@ gcloud -q compute networks delete kubernetes-the-hard-way
 
 [Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
 
+
+# HW 20. Kubernetes: Запуск кластера и приложения. Модель безопасности
+
+PR:  
+
+## План
+- Развернуть локальное окружение для работы с Kubernetes
+- Развернуть Kubernetes в GKE
+- Запустить reddit в Kubernetes  
+
+## Разворачиваем Kubernetes локально
+
+### Подготовка окружения
+- Установить **`kubectl`** - фактически, главная утилита для работы c Kubernetes API (все, что делает kubectl, можно сделать с помощью HTTP-запросов к API k8s)
+  - Способы установки [здесь](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- Создать каталог **`~/.kube`** - содержит служебную инфу для kubectl (конфиги, кеши, схемы API)
+- Установить **`minikube`** - утилита для разворачивания локальной инсталляции Kubernetes
+  - Установить локальный гипервизор [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+  - Способы установки minikube для разных осей [здесь](https://kubernetes.io/docs/tasks/tools/install-minikube/)  
+
+**Установка minikube**
+- To check if virtualization is supported on macOS
+  ```sh
+  sysctl -a | grep -E --color 'machdep.cpu.features|VMX'
+  ``` 
+  > If you see VMX in the output (should be colored), the VT-x feature is enabled in your machine.
+- The easiest way to install Minikube on macOS is using Homebrew
+  ```sh
+  brew install minikube
+  ```
+- To confirm successful installation of both a hypervisor and Minikube
+  ```sh
+  minikube start --vm-driver=virtualbox
+  ```
+- Once minikube start finishes, run the command below to check the status of the cluster
+  ```sh
+  minikube status
+
+  host: Running
+  kubelet: Running
+  apiserver: Running
+  kubeconfig: Configured
+  ```
+- Stop your cluster
+  ```sh
+  minikube stop
+  ```
+
+**Minikube**  
+- Запуск Minukube-кластера
+  ```sh
+  $ minikube start --vm-driver=virtualbox
+  🙄  minikube v1.6.2 on Darwin 10.15.1
+  ✨  Selecting 'virtualbox' driver from user configuration (alternates: [hyperkit])
+  💡  Tip: Use 'minikube start -p <name>' to create a new cluster, or 'minikube delete' to delete this one.
+  🔄  Starting existing virtualbox VM for "minikube" ...
+  ⌛  Waiting for the host to be provisioned ...
+  ⚠️  VM is unable to access k8s.gcr.io, you may need to configure a proxy or set --image-repository
+  🐳  Preparing Kubernetes v1.17.0 on Docker '19.03.5' ...
+  🚀  Launching Kubernetes ...
+  🏄  Done! kubectl is now configured to use "minikube"
+  ```
+  > Флаг `--kubernetes-version <version>` - если нужна конкретная версия kubernetes (v1.8.0)  
+  Флаг `--vm-driver=<hypervisor>` - для указания гипервизора (по дефолту используется VirtualBox)
+
+**Kubectl**  
+- При разворачивании миникуба, автоматически был настроен конфиг kubectl. Проверить:
+  ```sh
+  $ kubectl get nodes
+  NAME       STATUS   ROLES    AGE    VERSION
+  minikube   Ready    master   4d1h   v1.17.0
+  ```
+- Конфиг kubectl - это **контекст**. `Контекст` - это комбинация:
+  - `cluster` - API-сервер
+  - `user` - пользователь для подключения к кластеру
+  - `namespace' - область видимости (не обязательно, по- умолчанию default)
+  > Инфа о контекстах kubectl сохраняет в файле **`~/.kube/config`**
+
+- Файл **`~/.kube/config`** - это такой же манифест kubernetes в YAML-формате (есть и Kind, и ApiVersion)
+  ```sh
+  apiVersion: v1
+  clusters: # Список кластеров
+  - cluster:
+      certificate-authority: /Users/yulka/.minikube/ca.crt
+      server: https://192.168.99.100:8443
+    name: minikube
+  contexts: # Список контекстов
+  - context:
+      cluster: minikube
+      user: minikube
+    name: minikube
+  current-context: minikube
+  kind: Config
+  preferences: {}
+  users: # Список юзеров
+  - name: minikube
+    user:
+      client-certificate: /Users/yulka/.minikube/client.crt
+      client-key: /Users/yulka/.minikube/client.key
+  ```
+  - **Cluster** - это:
+    - `server` - адрес kubernetes API-сервера
+    - `certificate-authority` - корневой сертификат (которым подписан SSL-сертификат самого сервера), чтобы убедиться, что нас не обманывают и перед нами тот самый сервер
+    - `name` для идентификации в конфиге
+  - **User** - это:
+    - Данные для аутентификации (зависит от того, как настроен сервер). Это могут быть:
+      - `username` + `password` (Basic Auth)
+      - `client-key` + `client-certificate`
+      - `token`
+      - `auth-provider config` (например GCP)
+    - `name` для идентификации в конфиге
+  - **Context** - это:
+    - `cluster` - имя кластера из списка clusters
+    - `user` - имя пользователя из списка users
+    - `namespace` - область видимости по-умолчанию (не обязательно)
+    - `name` для идентификации в конфиге
+
+- **`Порядок конфигурирования kubectl`** следующий:
+  - Создать cluster
+    ```sh
+    $ kubectl config set-cluster ... cluster_name
+    ```
+  - Создать данные пользователя (credentials)
+    ```sh
+    $ kubectl config set-credentials ... user_name
+    ```
+  - Создать контекст
+    ```sh
+    $ kubectl config set-context context_name \
+    --cluster=cluster_name \
+    --user=user_name
+    ```
+  - Использовать контекст
+    ```sh
+    $ kubectl config use-context context_name
+    ```
+  > Таким образом kubectl конфигурируется для подключения к разным кластерам, под разными пользователями
+- Смотреть текущий контекст
+  ```sh
+  $ kubectl config current-context
+
+  minikube
+  ```
+- Список всех контекстов
+  ```sh
+  $ kubectl config get-contexts
+
+  CURRENT   NAME                      CLUSTER                   AUTHINFO               NAMESPACE
+            kubernetes-the-hard-way   kubernetes-the-hard-way   admin
+  *         minikube                  minikube                  minikube
+  ```
+
+## Запуск приложения
+Для работы приложения в kubernetes, необходимо описать их желаемое состояние либо в `YAML-манифестах`, либо с помощью `командной строки`.  
+Всю конфигурацию закинем в каталог `./kubernetes/reddit` внутри репозитория  
+
+> *Отступление*  
+  Закинула в реджестри образы с версиями (были только latest)    
+  `docker login`  
+  `docker pull <docker_login>/ui`  
+  `docker tag <docker_login>/ui:latest <docker_login>/ui:1.0`  
+  `docker push <docker_login>/ui:1.0`
+
+### Deployment
+Его основные задачи:
+- Создание `ReplicationSet` (следит, чтобы число запущенных Pod-ов соответствовало описанному)
+- Ведение `истории версий` запущенных Pod-ов (для различных стратегий деплоя, для возможностей отката)
+- Описание `процесса деплоя` (стратегия, параметры стратегий)
+
+**UI**
+- Файл [ui-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/e5e5fecd6d0629f662048f4d55fca3ccd7a52b9e/ui-deployment.yml)
+  - В `spec` блок **`selector`** описывает, как ему отслеживать POD-ы
+  - В нашем случае - контроллер будет считать POD-ы с метками:
+    `app=reddit` **И** `component=ui`
+  - Поэтому важно в описании POD-а задать нужные метки (**labels**)
+  > P.S. Для более гибкой выборки вводим 2 метки (`app` и `component`)
+    ```sh
+    spec:
+    ...
+      selector:
+        matchLabels:
+          app: reddit
+          component: ui
+      template:
+        metadata:
+          name: ui-pod
+          labels:
+            app: reddit
+            component: ui
+    ...
+    ```
+- Запуск ui в Minikube
+  ```sh
+  $ kubectl apply -f ui-deployment.yml
+
+  deployment.apps/ui created
+  ```
+- Проверка (число реплик должно быть 3)
+  ```sh
+  $ kubectl get deployment
+  NAME   READY   UP-TO-DATE   AVAILABLE   AGE
+  ui     3/3     3            3           2m38s
+  ```
+> P.S. `kubectl apply -f <filename>` может принимать не только отдельный файл, но и папку с ними. Например: `kubectl apply -f ./kubernetes/reddit`
+
+- Необходимо настроить сеть для общения с приложением.  
+  Kubectl умеет пробрасывать сетевые порты POD-ов на локальную машину.  
+  - Найдем, используя `selector`, POD-ы приложения
+    ```sh
+    $ kubectl get pods --selector component=ui -o wide
+    ```
+  - Пробросим порт
+    ```sh
+    $ kubectl port-forward <pod-name> 8080:9292
+    ```
+    - `8080` - local-port
+    - `9292` - pod-port
+  - Проверка  
+    http://localhost:8080
+
+**Comment**  
+- Файл [comment-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/e5e5fecd6d0629f662048f4d55fca3ccd7a52b9e/comment-deployment.yml) - по аналогии с ui
+- Запуск comment в Minikube
+  ```sh
+  $ kubectl apply -f comment-deployment.yml
+
+  deployment.apps/comment created
+  ```
+- Проверка (число реплик должно быть 3)
+  ```sh
+  $ kubectl get deployment
+  ```
+- Нашла pod-ы и пробросила порт
+  ```sh
+  $ kubectl get pods --selector component=comment
+  $ kubectl port-forward comment-fb64bf4-5txl8 8080:9292
+  ```
+- Проверка  
+  http://localhost:8080/healthcheck  
+  - Результат  
+  `{"status":0,"dependent_services":{"commentdb":0},"version":"0.0.3"}`
+ 
+**Post**
+- Файл [post-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/e5e5fecd6d0629f662048f4d55fca3ccd7a52b9e/post-deployment.yml) - по аналогии с ui
+- Запуск post в Minikube
+  ```sh
+  $ kubectl apply -f post-deployment.yml
+
+  deployment.apps/post created
+  ```
+- Проверка (число реплик должно быть 3)
+  ```sh
+  $ kubectl get deployment
+  ```
+- Нашла pod-ы и пробросила порт
+  ```sh
+  $ kubectl get pods --selector component=post
+  $ kubectl port-forward post-7b78485b94-h7jj7 5001:5000
+  ```
+- Проверка  
+  http://localhost:8080 и потыкать посты
+
+**MongoDB**
+- Файл [mongo-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/d6ada3d0ec46b3e80a85c29dcdbe34c8c621947a/mongo-deployment.yml)
+- Примонтировала стандартный вольюм для хранения данных вне конта. Добавила в [спеку пода](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/d9f441b96233ed63a4e9b2ee64e1d0012e983dee/Volume%2520in%2520mongo-deployment.yml):
+  ```sh
+      spec:
+        containers:
+        - image: mongo:3.2
+          name: mongo
+          volumeMounts:
+          - name: mongo-persistent-storage
+            mountPath: /data/db
+        volumes:
+        - name: mongo-persistent-storage
+          emptyDir: {}
+  ```
+- Запуск монго
+  ```sh
+  $ kubectl apply -f mongo-deployment.yml
+  deployment.apps/mongo configured
+  ```
+- Проверка  
+  ```sh
+  $ kubectl get pods --selector component=mongo
+  NAME                     READY   STATUS    RESTARTS   AGE
+  mongo-7d5db556f9-fcblw   1/1     Running   0          2m1s
+  mongo-7d5db556f9-j6nlm   1/1     Running   0          114s
+  mongo-7d5db556f9-nlxrq   1/1     Running   0          118s
+  ```  
+
+### Services
+
+В текущем состоянии приложение не будет работать, тк его компоненты ещё не знают как найти друг друга.  
+Для связи компонент между собой и с внешним миром используется объект **Service** - абстракция, которая определяет набор POD-ов (`Endpoints`) и способ доступа к ним.  
+
+Для связи ui с post и comment нужно создать им по объекту Service:
+
+**Comment**  
+- [comment-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/5b159fa399fdeb79a6538aa68b41a57ddac7586f/comment-service.yml)  
+  Когда объект *service* будет создан:  
+  - В DNS появится запись для comment (берется из поля name в метадате к service)
+  - При обращении на адрес `post:9292` изнутри любого из подов текущего неймспейса нас переправит на 9292 порт одного из подов приложения post, выбранных по `label` (selector: app и component)  
+- Заэплаить сервис
+  ```sh
+  $ kubectl apply -f comment-service.yml
+  ```
+- По label-ам должны были быть найдены соответствующие POD-ы. Посмотреть можно так:
+  ```sh
+  $ kubectl describe service comment | grep Endpo
+  
+  Endpoints:         172.17.0.15:9292,172.17.0.2:9292,172.17.0.7:9292
+  ```
+- И изнутри любого пода должен резолвиться comment:
+  ```sh
+  $ kubectl exec -it post-7b78485b94-tntts nslookup comment
+
+  Name:      comment
+  Address 1: 10.96.125.165 comment.default.svc.cluster.local
+  ```  
+
+**Post**
+- [post-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/0acf5344bd709484b15ce4d68950a4d004afa87c/post-service.yml)  
+  Создала объект Service для post по аналогии с comment, поменяла лейблы, имя, порты.
+- Заэплаить сервис
+  ```sh
+  $ kubectl apply -f post-service.yml
+  ```
+
+**MongoDB**
+- [mongo-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/4b3628fe5b8229bac6989390858a5efd61949e80/mongo-service.ymlhttps://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/4b3628fe5b8229bac6989390858a5efd61949e80/mongo-service.yml)  
+  Post и Comment юзают монгу, поэтому ей тоже нужен объект Service.
+- Заэплаить сервис mongo и пробросить порт на ui pod
+  ```sh
+  $ kubectl apply -f mongo-service.yml
+  $ kubectl port-forward ui-78b4c8444b-std59 9292:9292
+  ```
+- Проверка
+  http://localhost:9292/
+
+Не взлетело. Дальше по дз ищем причину.  
+- Смотрим в логи поста:
+  ```
+  $ kubectl logs -f post-7b78485b94-tntts
+
+  {"event": "post_create", "level": "error", "message": "Failed to create a post. Reason: post_db:27017: [Errno -2] Name does not resolve", "params": {"link": "http://34.76.4.83:9292", "title": "ttt"}, "request_id": "bf26d314-2d26-4097-8dc9-c5874c5c30c1", "service": "post", "timestamp": "2020-03-31 15:47:27"}
+  ```
+
+Немношк другие логи, но доверюсь ДЗ )  
+Приложение ищет совсем другой адрес: **comment_db**, а не `mongodb`  
+Аналогично и сервис `comment` ищет **post_db**  
+Эти адреса заданы в их Dockerfile-ах в виде переменных окружения:
+```
+cat src/post-py/Dockerfile
+...
+ENV POST_DATABASE_HOST post_db
+```
+```
+src/comment/Dockerfile
+...
+ENV COMMENT_DATABASE_HOST comment_db
+```  
+В Docker Swarm проблема доступа к одному ресурсу под разными именами решалась с помощью сетевых алиасов.  
+В Kubernetes такого функционала нет. Мы эту проблему можем решить с помощью тех же Service-ов.  
+
+*`Comment`*  
+- Сделала Service для БД comment - [comment-mongodb-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/6434160ea92fd08cf62d6f2fd55e7a33dd18548b/comment-mongodb-service.yml)  
+> В name нельзя использовать " _ "  
+
+> PS. Булевые значения обязательно указывать в кавычках (в двойных)  
+- Так же придется обновить файл deployment для mongodb, чтобы новый Service смог найти нужный POD - [mongo-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/335c57aaed96a048123d50657b94d5fefc0eeca2/New%2520mongo-deployment.yml)
+  Добавлены лейблы в деплоймент и в под
+- В файле [comment-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/a92170eefb6c54edec069b461a31c4b6e27e305b/New%2520comment-deployment.yml) задала переменную окружения для обращения к базе:
+  ```sh
+        containers:
+        - image: yulka/comment:1.0
+          name: comment
+          env:
+          - name: COMMENT_DATABASE_HOST
+            value: comment-db
+  ```
+
+*`Post`*  
+Мы сделали базу доступной для comment. Теперь аналогичные действия для post сервиса. Название сервиса будет **post-db**
+- Service для БД post - [post-mongodb-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/ca77f3f5e4c6cb9be481cfb6c0f9dec4f65b19f5/post-mongodb-service.yml)
+- Обновила [mongo-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/ca77f3f5e4c6cb9be481cfb6c0f9dec4f65b19f5/New%25202%2520mongo-deployment.yml)
+- Обновила [post-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/ca77f3f5e4c6cb9be481cfb6c0f9dec4f65b19f5/New%2520post-deployment.yml)
+
+
+- Пересоздала все объекты
+  ```sh
+  $ kubectl apply -f kubernetes/reddit/
+  ```
+- Сделала форвардинг на UI 
+  ```
+  $ kubectl port-forward ui-78b4c8444b-65ptr 9292:9292
+
+  Forwarding from 127.0.0.1:9292 -> 9292
+  Forwarding from [::1]:9292 -> 9292
+  ```
+- Проверила, что всё работает, посты добавляются  
+  http://127.0.0.1:9292/
+
+- Зачем-то удалили сервис mongodb
+  ```
+  $ kubectl delete service mongodb
+  service "mongodb" deleted
+  ``` 
+
+**UI**  
+- Необходимо обеспечить доступ к ui-сервису снаружи. Создала Service для UI - [ui-service.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/fc5bc6897a088abbe936807f7b64b4d3e156eacc/ui-service.yml)  
+
+По-умолчанию все сервисы имеют тип **ClusterIP** - это значит, что сервис распологается на внутреннем диапазоне IP-адресов кластера. `Снаружи до него нет доступа`  
+Тип **NodePort** - на каждой ноде кластера открывает порт из диапазона **`30000-32767`** и переправляет трафик с этого порта на тот, который указан в **targetPort** Pod (похоже на стандартный expose в docker)  
+Теперь до сервиса можно дойти по `<Node-IP>:<NodePort>`  
+Также можно указать самим `NodePort` (но все равно из диапазона):
+```sh
+spec:
+  type: NodePort
+ports:
+- nodePort: 32092 
+    port: 9292
+    protocol: TCP
+    targetPort: 9292
+selector:
+```
+
+### В описании Service
+**`NodePort`** - для доступа снаружи кластера  
+**`port`** - для доступа к сервису изнутри кластера
+
+## Minikube
+
+`Minikube` может выдавать web-странцы с сервисами, которые были помечены типом **NodePort**
+```
+$ minikube service ui
+|-----------|------|-------------|-----------------------------|
+| NAMESPACE | NAME | TARGET PORT |             URL             |
+|-----------|------|-------------|-----------------------------|
+| default   | ui   |             | http://192.168.99.100:30931 |
+|-----------|------|-------------|-----------------------------|
+🎉  Opening service default/ui in default browser...
+```
+
+`Minikube` может перенаправлять на web-странцы с сервисами, которые были помечены типом **NodePort**
+- Смотреть список сервисов
+  ```
+  $ minikube service list
+  |-------------|------------|-----------------------------|
+  |  NAMESPACE  |    NAME    |             URL             |
+  |-------------|------------|-----------------------------|
+  | default     | comment    | No node port                |
+  | default     | comment-db | No node port                |
+  | default     | kubernetes | No node port                |
+  | default     | post       | No node port                |
+  | default     | post-db    | No node port                |
+  | default     | ui         | http://192.168.99.100:30931 |
+  | kube-system | kube-dns   | No node port                |
+  |-------------|------------|-----------------------------|
+  ```
+
+`Minikube` также имеет в комплекте несколько стандартных аддонов (расширений) для Kubernetes (*kube-dns, dashboard, monitoring*,...).  
+Каждое расширение - это такие же *PODы и сервисы*, какие создавались нами, только они еще общаются с *API самого Kubernetes*
+- Смотреть список расширений
+  ```
+  $ minikube addons list
+  - addon-manager: enabled
+  - dashboard: disabled
+  - default-storageclass: enabled
+  - efk: disabled
+  - freshpod: disabled
+  - gvisor: disabled
+  - helm-tiller: disabled
+  - ingress: disabled
+  - ingress-dns: disabled
+  - logviewer: disabled
+  - metrics-server: disabled
+  - nvidia-driver-installer: disabled
+  - nvidia-gpu-device-plugin: disabled
+  - registry: disabled
+  - registry-creds: disabled
+  - storage-provisioner: enabled
+  - storage-provisioner-gluster: disabled
+  ```
+
+Интересный аддон - **`dashboard`**. Это UI для работы с kubernetes. По умолчанию в новых версиях он включен. Как и многие kubernetes add-on'ы, dashboard запускается в виде pod'а.  
+
+Поды и сервисы для dashboard-а запускаются в namespace **`kube-system`**  
+
+## Namespaces
+
+**`Namespace`** - это, по сути, виртуальный кластер Kubernetes внутри самого Kubernetes. Внутри каждого такого кластера находятся свои объекты (*POD-ы, Service-ы, Deployment-ы* и т.д.), кроме объектов, общих на все namespace-ы (*nodes, ClusterRoles, PersistentVolumes*)  
+
+В разных namespace-ах могут находится объекты с одинаковыми именами, но в рамках одного namespace имена объектов должны быть уникальны  
+
+При старте **Kubernetes кластер** уже имеет 3 namespace:
+- **default** - для объектов, для которых не определен другой Namespace (в нем мы работали все это время)
+- **kube-system** - для объектов, созданных Kubernetes’ом и для управления им
+- **kube-public** - для объектов, к которым нужен доступ из любой точки кластера  
+
+> Для того, чтобы выбрать конкретное пространство имен, нужно указать флаг `-n <namespace>` или `--namespace <namespace>` при запуске kubectl  
+
+- Посмотреть какие объекты есть для dashboard:
+  ```sh
+  # Аддон не был включен, включила
+
+  $ minikube addons enable dashboard
+  ✅  dashboard was successfully enabled
+  
+  # Вывела все объекты из неймспейса kubernetes-dashboard, имеющие label app=kubernetes-dashboard
+
+  $ kubectl get all -n kubernetes-dashboard --selector k8s-app=kubernetes-dashboard
+  NAME                                       READY   STATUS    RESTARTS   AGE
+  pod/kubernetes-dashboard-79d9cd965-jjpnx   1/1     Running   0          6m58s
+
+  NAME                           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+  service/kubernetes-dashboard   ClusterIP   10.96.224.192   <none>        80/TCP    7m4s
+
+  NAME                                   READY   UP-TO-DATE   AVAILABLE   AGE
+  deployment.apps/kubernetes-dashboard   1/1     1            1           6m59s
+
+  NAME                                             DESIRED   CURRENT   READY   AGE
+  replicaset.apps/kubernetes-dashboard-79d9cd965   1         1         1       6m59s
+  ```
+
+## Dashboard
+
+Заходим в Dashboard:
+```sh
+$ minikube dashboard
+```
+В самом Dashboard можно:
+- Отслеживать состояние кластера и рабочих нагрузок в нем
+- Создавать новые объекты (загружать YAML-файлы)
+- Удалять и изменять объекты (кол-во реплик, yaml-файлы)
+- Отслеживать логи в Pod-ах
+- При включении Heapster-аддона смотреть нагрузку на Pod-ах
+
+## Namespace
+
+Отделим среду для разработки приложения от остального кластера.  
+Для этого создадим Namespace **dev**  
+- [dev-namespace.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/c8ba21a73de0e532de29340453e450f2ad25fbf8/dev-namespace.yml)
+- Заэплаить
+  ```sh
+  $ kubectl apply -f dev-namespace.yml
+  ```
+- Запуск приложения в неймспейсе dev
+  ```sh
+  $ kubectl apply -n dev -f ./
+  deployment.apps/comment created
+  service/comment-db created
+  service/comment created
+  namespace/dev unchanged
+  deployment.apps/mongo created
+  service/mongodb created
+  deployment.apps/post created
+  service/post-db created
+  service/post created
+  deployment.apps/ui created
+  service/ui created
+  ```
+  > Если возник конфликт портов у ui-service, то убираем из описания значение NodePort
+- Проверка
+  ```sh
+  $ minikube service ui -n dev
+  ```
+- Добавила инфу об окружении внутрь конта UI - [ui-deployment.yml](https://gist.githubusercontent.com/Lisskha/92143ad4b8760aab6505f39f4a3555b0/raw/a9baf37e097f65a10413256e18aafdd56102d6a9/New%2520ui-deployment.yml)
+  ```sh
+  $ kubectl apply -n dev -f ui-deployment.yml
+  ```
+- Проверка
+  ```sh
+  $ minikube service ui -n dev
+  ```
+  > Пояивтся название энва на странице
+
+## Разворачиваем Kubernetes
+
+> В качестве основной платформы будем использовать **Google Kubernetes Engine**  
+
+- В [морде GCP](https://console.cloud.google.com/) идем в `Kubernetes Engine > Clusters`
+- Создаем кластер с параметрами:
+  - `Cluster`
+    - Версия головного узла: 1.14.10-gke.27
+    - Конечная точка: 35.224.150.15
+    - Клиентский сертификат: Отключен
+    - Общий размер: 2
+    - Головная зона: us-central1-c
+    - Зоны узлов: us-central1-c
+    - Диапазон адресов группы контейнеров: 10.4.0.0/14
+    - Диапазон адресов сервиса: 10.8.0.0/20
+    - Устаревшие права доступа: Отключено
+    - Istio: Отключен
+    - Панель управления Kubernetes: Отключено
+    - Балансировка нагрузки HTTP: Включено
+  - `Node pool`
+    - Кластер: cluster-1
+    - Версия узла: 1.14.10-gke.27
+    - Количество узлов: 2
+    - Автомасштабирование: Отключено
+    - Тип машины: g1-small
+    - Размер загрузочного диска (на каждый узел): 20 ГБ
+    - Автообновление: Отключено
+
+Компоненты управления кластером запускаются в **`Container Engine`** и управляются Google:
+- kube-apiserver
+- kube-scheduler
+- kube-controller-manager
+- etcd  
+
+Рабочая нагрузка (собственные POD-ы), аддоны, мониторинг, логирование и т.д. запускаются на **`рабочих нодах`**  
+
+**`Рабочие ноды`** - стандартные ноды Google `Compute Engine > VM instances`. Их можно увидеть в списке запущенных узлов  
+На них всегда можно зайти по ssh  
+Их можно остановить и запустить  
+
+- Подключимся к **GKE** для запуска нашего приложения  
+  - В Kubernetes Engine > Clusters тыкнуть Connect, там скопировать команду для gcloud
+  ```sh
+  $ gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project docker-259422
+  ```
+- В результате в файл `~/.kube/config` будут добавлены **user, cluster** и **context** для подключения к кластеру в GKE. Также текущий контекст будет выставлен для подключения к этому кластеру.
+  ```
+  apiVersion: v1
+  clusters:
+  - cluster:
+      certificate-authority-data: ...
+      server: https://35.224.150.15
+    name: gke_docker-259422_us-central1-c_cluster-1
+  contexts:
+  - context:
+      cluster: gke_docker-259422_us-central1-c_cluster-1
+      user: gke_docker-259422_us-central1-c_cluster-1
+    name: gke_docker-259422_us-central1-c_cluster-1
+  current-context: gke_docker-259422_us-central1-c_cluster-1
+  kind: Config
+  preferences: {}
+  users:
+  - name: gke_docker-259422_us-central1-c_cluster-1
+    user:
+      auth-provider:
+        config:
+          cmd-args: config config-helper --format=json
+          cmd-path: /path/to/bin/gcloud
+          expiry-key: '{.credential.token_expiry}'
+          token-key: '{.credential.access_token}'
+        name: gcp
+  ```
+- Проверить текущий контекст
+  ```
+  $ kubectl config current-context
+
+  gke_docker-259422_us-central1-c_cluster-1
+  ```
+
+### Запуск приложения в GKE
+- Создать **dev** namespace
+  ```sh
+  $ kubectl apply -f dev-namespace.yml
+
+  namespace/dev created
+  ```
+- Задеплоить все компоненты приложения в namespace dev
+  ```sh
+  $ kubectl apply -f ./ -n dev
+
+  deployment.apps/comment created
+  service/comment-db created
+  service/comment created
+  namespace/dev unchanged
+  deployment.apps/mongo created
+  service/mongodb created
+  deployment.apps/post created
+  service/post-db created
+  service/post created
+  deployment.apps/ui created
+  service/ui created
+  ```
+- Открыть reddit для внешнего мира в правилах брандмауэра:  
+  `VPC Network > Firewall rules`
+  - Создала правило
+    - Name: kube02
+    - Targets: Apply to all
+    - IP ranges: 0.0.0.0/0
+    - Protocols / ports: tcp:30000-32767
+- Посмотреть инфу о нодах (status, IP и тд)
+  ```sh
+  $ kubectl get nodes -o wide
+  NAME                                       STATUS   ROLES    AGE    VERSION           INTERNAL-IP   EXTERNAL-IP     OS-IMAGE                             KERNEL-VERSION   CONTAINER-RUNTIME
+  gke-cluster-1-default-pool-43fd7974-f2vk   Ready    <none>   166m   v1.14.10-gke.27   10.128.0.4    35.188.55.16    Container-Optimized OS from Google   4.14.138+        docker://18.9.7
+  gke-cluster-1-default-pool-43fd7974-tjvt   Ready    <none>   166m   v1.14.10-gke.27   10.128.0.3    35.239.233.90   Container-Optimized OS from Google   4.14.138+        docker://18.9.7
+  ``` 
+- Найти порт публикации сервиса UI
+  ```sh
+  $ kubectl describe service ui -n dev | grep NodePort
+  Type:                     NodePort
+  NodePort:                 <unset>  30510/TCP
+  ```
+- Проверка:
+  http://35.239.233.90:30510/
+
+### Запустить Dashboard для кластера
+- В морде зайти в настройки кластера и включить дополнение "Панель управления Kubernetes"
+- После запуска кластера запустить
+  ```sh
+  $ kubectl proxy
+  Starting to serve on 127.0.0.1:8001
+  ```
+- Проверка:
+  http://localhost:8001/ui
+  Скипаем
+- У dashboard не хватает прав, чтобы посмотреть на кластер. Его не пускает **RBAC** (ролевая система контроля доступа). Нужно нашему `Service Account` назначить роль с достаточными правами на просмотр информации о кластере
+- В кластере уже есть объект **ClusterRole** с названием `cluster-admin`. Тот, кому назначена эта роль имеет полный доступ ко всем объектам кластера. Назначим эту роль `service account-у` dashboard-а с помощью **`clusterrolebinding`**
+  ```sh
+  $ kubectl create clusterrolebinding kubernetes-dashboard  --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+
+  clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+  ```
+  - `kube-system:kubernetes-dashboard` - комбинация serviceaccount и namespace, в котором он создан 
+- Проверка:
+  http://localhost:8001/ui
+
+## Доп. задание №1
+
+[Вернуться к оглавлению ^](https://github.com/Otus-DevOps-2019-08/Lisskha_microservices#table-of-contents)
